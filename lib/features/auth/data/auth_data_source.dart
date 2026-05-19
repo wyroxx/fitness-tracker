@@ -27,11 +27,11 @@ class AuthDataSource {
       _logger.i('Logged in successfully');
       return TokenResponse.fromJson(response.data!);
     } else if (response.statusCode == 400) {
-      throw const BadRequestException();
+      throw BadRequestException(_errorMessage(response));
     } else if (response.statusCode == 401) {
-      throw const UnauthorizedException();
+      throw UnauthorizedException(_errorMessage(response));
     }
-    throw const ApiException();
+    throw ApiException(_errorMessage(response));
   }
 
   Future<void> logout() async {
@@ -40,7 +40,7 @@ class AuthDataSource {
       _logger.i('Logged out successfully');
       return;
     }
-    throw const ApiException();
+    throw ApiException(_errorMessage(response));
   }
 
   Future<TokenResponse> refresh(String refreshToken) async {
@@ -52,11 +52,11 @@ class AuthDataSource {
       _logger.i('Refreshed tokens successfully');
       return TokenResponse.fromJson(response.data!);
     } else if (response.statusCode == 400) {
-      throw const BadRequestException();
+      throw BadRequestException(_errorMessage(response));
     } else if (response.statusCode == 401) {
-      throw const UnauthorizedException();
+      throw UnauthorizedException(_errorMessage(response));
     }
-    throw const ApiException();
+    throw ApiException(_errorMessage(response));
   }
 
   Future<void> register(RegisterRequest request) async {
@@ -68,10 +68,25 @@ class AuthDataSource {
       _logger.i('Account was created successfully');
       return;
     } else if (response.statusCode == 400) {
-      throw const BadRequestException();
+      throw BadRequestException(_errorMessage(response));
     } else if (response.statusCode == 500) {
-      throw const ServerException();
+      throw ServerException(_errorMessage(response));
     }
-    throw const ApiException();
+    throw ApiException(_errorMessage(response));
+  }
+
+  String _errorMessage(Response<dynamic> response) {
+    final data = response.data;
+    if (data is Map<String, dynamic>) {
+      final error = data['error'];
+      if (error is String && error.isNotEmpty) {
+        return error;
+      }
+      final message = data['message'];
+      if (message is String && message.isNotEmpty) {
+        return message;
+      }
+    }
+    return 'Request failed with status ${response.statusCode}';
   }
 }

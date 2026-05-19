@@ -9,7 +9,7 @@ import 'package:fitness_tracker/features/auth/domain/auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-final authRepositoryProvider = Provider<AuthRepositoryImpl>((ref) {
+final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final dataSource = ref.watch(authDataSourceProvider);
   final tokenStorage = ref.watch(tokenStorageProvider);
   return AuthRepositoryImpl(dataSource, tokenStorage);
@@ -45,12 +45,12 @@ class AuthRepositoryImpl implements AuthRepository {
         accessToken: response.accessToken,
         refreshToken: response.refreshToken
       );
-    } on BadRequestException {
-      throw const AuthException('Check the credentials');
+    } on BadRequestException catch (e) {
+      throw AuthException(e.message);
     } on StorageException {
       throw const AuthException('Could not save the session');
-    } on UnauthorizedException {
-      throw const AuthException('Wrong email or password');
+    } on UnauthorizedException catch (e) {
+      throw AuthException(e.message);
     } catch (e) {
       throw const AuthException('Could not login into account');
     }
@@ -78,10 +78,10 @@ class AuthRepositoryImpl implements AuthRepository {
         name: name,
       );
       await _dataSource.register(request);
-    } on BadRequestException {
-      throw const AuthException('Check the credentials');
-    } on ServerException {
-      throw const AuthException('Server error. Try later');
+    } on BadRequestException catch (e) {
+      throw AuthException(e.message);
+    } on ServerException catch (e) {
+      throw AuthException(e.message);
     } catch (e) {
       throw const AuthException('Could not create the account');
     }

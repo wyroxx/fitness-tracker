@@ -71,12 +71,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 text: 'Sign in',
                 width: double.infinity,
                 height: 46,
-                onPressed: () {
-                  ref.read(authControllerProvider.notifier).login(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  );
-                  context.go('/trainings');
+                onPressed: () async {
+                  try {
+                    await ref.read(authControllerProvider.notifier).login(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+                    if (context.mounted) {
+                      context.go('/trainings');
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString())),
+                      );
+                    }
+                  }
                 },
               ),
               const Spacer(),

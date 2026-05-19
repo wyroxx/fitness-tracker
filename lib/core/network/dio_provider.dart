@@ -8,6 +8,7 @@ final dioProvider = Provider<Dio>((ref) {
       connectTimeout: const Duration(seconds: 8),
       receiveTimeout: const Duration(seconds: 8),
       sendTimeout: const Duration(seconds: 8),
+      validateStatus: (status) => status != null,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

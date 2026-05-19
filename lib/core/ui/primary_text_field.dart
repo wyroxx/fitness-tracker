@@ -17,6 +17,7 @@ class PrimaryTextField extends StatelessWidget {
     return SizedBox(
       height: 46,
       child: TextField(
+        controller: controller,
         cursorColor: const Color(0xFF3981E0),
         obscureText: obscureText,
         style: const TextStyle(

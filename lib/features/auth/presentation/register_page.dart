@@ -78,13 +78,23 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 text: 'Sign up',
                 width: double.infinity,
                 height: 46,
-                onPressed: () {
-                  ref.read(authControllerProvider.notifier).register(
-                    name: _nameController.text.trim(),
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  );
-                  context.go('/login');
+                onPressed: () async {
+                  try {
+                    await ref.read(authControllerProvider.notifier).register(
+                      name: _nameController.text.trim(),
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+                    if (context.mounted) {
+                      context.go('/login');
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(e.toString())),
+                      );
+                    }
+                  }
                 }
               ),
               const Spacer(),

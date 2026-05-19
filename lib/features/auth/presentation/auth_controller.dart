@@ -15,7 +15,7 @@ class AuthController extends Notifier<AuthStatus> {
     return AuthStatus.unauthenticated;
   }
 
-  void login({
+  Future<void> login({
     required String email,
     required String password,
   }) async {
@@ -30,7 +30,7 @@ class AuthController extends Notifier<AuthStatus> {
     }
   }
 
-  void register({
+  Future<void> register({
     required String name,
     required String email,
     required String password,
@@ -50,7 +50,7 @@ class AuthController extends Notifier<AuthStatus> {
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     state = AuthStatus.loading;
     try {
       final repository = ref.read(authRepositoryProvider);
