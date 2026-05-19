@@ -10,25 +10,23 @@ import '../features/trainings/presentation/trainings_page.dart';
 import '../features/workout_editor/presentation/add_training_page.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authControllerProvider);
+  final authStatus = ref.watch(authControllerProvider);
 
   return GoRouter(
     initialLocation: '/login',
 
     redirect: (context, state) {
-      final isLoggedIn = authState.isAuthenticated;
-      final isLoading = authState.isLoading;
       final location = state.matchedLocation;
 
-      if (isLoading) {
+      if (authStatus == AuthStatus.loading) {
         return null;
       }
 
-      if (!isLoggedIn && location != '/login' && location != '/register') {
+      if (authStatus == AuthStatus.unauthenticated && location != '/login' && location != '/register') {
         return '/login';
       }
 
-      if (isLoggedIn && (location == '/login' || location == '/register')) {
+      if (authStatus == AuthStatus.authenticated && (location == '/login' || location == '/register')) {
         return '/trainings';
       }
 

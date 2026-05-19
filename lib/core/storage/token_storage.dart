@@ -1,5 +1,11 @@
+import 'package:fitness_tracker/core/storage/storage_exception.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
+
+final tokenStorageProvider = Provider<TokenStorage>((ref) {
+  return TokenStorage();
+});
 
 class TokenStorage {
   final _storage = const FlutterSecureStorage();
@@ -15,6 +21,7 @@ class TokenStorage {
       _logger.i('Tokens saved successfully');
     } catch (e) {
       _logger.e('Error saving tokens: $e');
+      throw const StorageException('Error saving tokens');
     }
   }
 
@@ -24,7 +31,7 @@ class TokenStorage {
       return token;
     } catch (e) {
       _logger.e('Error reading access token: $e');
-      return null;
+      throw const StorageException('Error reading access token');
     }
   }
 
@@ -34,7 +41,7 @@ class TokenStorage {
       return token;
     } catch (e) {
       _logger.e('Error reading refresh token: $e');
-      return null;
+      throw const StorageException('Error reading refresh token');
     }
   }
 
@@ -45,6 +52,7 @@ class TokenStorage {
       _logger.i('Tokens deleted successfully');
     } catch (e) {
       _logger.e('Error deleting tokens: $e');
+      throw const StorageException('Error deleting tokens');
     }
   }
 }
