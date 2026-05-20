@@ -1,3 +1,5 @@
+import 'package:fitness_tracker/app/main_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../features/auth/presentation/auth_controller.dart';
@@ -9,10 +11,13 @@ import '../features/profile/presentation/profile_page.dart';
 import '../features/trainings/presentation/trainings_page.dart';
 import '../features/workout_editor/presentation/add_training_page.dart';
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authStatus = ref.watch(authControllerProvider);
 
   return GoRouter(
+    navigatorKey: _rootNavigatorKey,
     initialLocation: '/login',
 
     redirect: (context, state) {
@@ -45,6 +50,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const RegisterPage(),
       ),
       ShellRoute(
+        builder: (context, state, child) => MainPage(
+          child: child,
+        ),
         routes: [
           GoRoute(
             name: 'trainings',

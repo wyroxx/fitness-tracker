@@ -14,7 +14,12 @@ final authDataSourceProvider = Provider<AuthDataSource>((ref) {
 
 class AuthDataSource {
   final Dio _dio;
-  final Logger _logger = Logger();
+  final Logger _logger = Logger(
+    printer: SimplePrinter(
+      printTime: false,
+      colors: false
+    )
+  );
 
   AuthDataSource(this._dio);
 
@@ -39,22 +44,6 @@ class AuthDataSource {
     if (response.statusCode == 204) {
       _logger.i('Logged out successfully');
       return;
-    }
-    throw ApiException(_errorMessage(response));
-  }
-
-  Future<TokenResponse> refresh(String refreshToken) async {
-    final response = await _dio.post<Map<String, dynamic>>(
-      '/auth/refresh',
-      data: refreshToken,
-    );
-    if (response.statusCode == 200) {
-      _logger.i('Refreshed tokens successfully');
-      return TokenResponse.fromJson(response.data!);
-    } else if (response.statusCode == 400) {
-      throw BadRequestException(_errorMessage(response));
-    } else if (response.statusCode == 401) {
-      throw UnauthorizedException(_errorMessage(response));
     }
     throw ApiException(_errorMessage(response));
   }

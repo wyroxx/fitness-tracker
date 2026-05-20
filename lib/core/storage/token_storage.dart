@@ -9,7 +9,12 @@ final tokenStorageProvider = Provider<TokenStorage>((ref) {
 
 class TokenStorage {
   final _storage = const FlutterSecureStorage();
-  final _logger = Logger();
+  final _logger = Logger(
+    printer: SimplePrinter(
+      printTime: false,
+      colors: false
+    )
+  );
 
   Future<void> saveTokens({
     required String accessToken,
