@@ -15,10 +15,7 @@ final authDataSourceProvider = Provider<AuthDataSource>((ref) {
 class AuthDataSource {
   final Dio _dio;
   final Logger _logger = Logger(
-    printer: SimplePrinter(
-      printTime: false,
-      colors: false
-    )
+    printer: SimplePrinter(printTime: false, colors: false),
   );
 
   AuthDataSource(this._dio);
@@ -27,6 +24,7 @@ class AuthDataSource {
     final response = await _dio.post<Map<String, dynamic>>(
       '/auth/login',
       data: request.toJson(),
+      options: Options(validateStatus: (status) => status != null),
     );
     if (response.statusCode == 200) {
       _logger.i('Logged in successfully');
@@ -52,6 +50,7 @@ class AuthDataSource {
     final response = await _dio.post<Map<String, dynamic>>(
       '/users',
       data: request.toJson(),
+      options: Options(validateStatus: (status) => status != null),
     );
     if (response.statusCode == 201) {
       _logger.i('Account was created successfully');

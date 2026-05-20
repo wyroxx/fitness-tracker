@@ -5,18 +5,16 @@ class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _refreshDio;
 
-  AuthInterceptor({
-    required TokenStorage tokenStorage,
-    required Dio refreshDio
-  }) : _refreshDio = refreshDio,
-       _tokenStorage = tokenStorage;
+  AuthInterceptor({required TokenStorage tokenStorage, required Dio refreshDio})
+    : _refreshDio = refreshDio,
+      _tokenStorage = tokenStorage;
 
   @override
   Future<void> onRequest(
     RequestOptions options,
-    RequestInterceptorHandler handler
+    RequestInterceptorHandler handler,
   ) async {
-    if (_isAuthEndpoint(options.path)) {
+    if (_isPublicAuthEndpoint(options)) {
       handler.next(options);
       return;
     }
@@ -31,11 +29,11 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<void> onError(
     DioException err,
-    ErrorInterceptorHandler handler
+    ErrorInterceptorHandler handler,
   ) async {
     final statusCode = err.response?.statusCode;
     final options = err.requestOptions;
-    if (statusCode != 401 || _isAuthEndpoint(options.path)) {
+    if (statusCode != 401 || _isPublicAuthEndpoint(options)) {
       handler.next(err);
       return;
     }
@@ -49,7 +47,10 @@ class AuthInterceptor extends Interceptor {
     }
 
     try {
-      final response = await _refreshDio.post<Map<String, dynamic>>('/auth/refresh');
+      final response = await _refreshDio.post<Map<String, dynamic>>(
+        '/auth/refresh',
+        data: {'refresh_token': refreshToken},
+      );
 
       final data = response.data;
       if (data == null) {
@@ -60,7 +61,7 @@ class AuthInterceptor extends Interceptor {
 
       await _tokenStorage.saveTokens(
         accessToken: data['access_token'] as String,
-        refreshToken: data['refresh_token'] as String
+        refreshToken: data['refresh_token'] as String,
       );
 
       options.headers['Authorization'] = 'Bearer ${data['access_token']}';
@@ -72,9 +73,12 @@ class AuthInterceptor extends Interceptor {
     }
   }
 
-  bool _isAuthEndpoint(String path) {
-    return path.contains('/auth/login')
-      || path.contains('/auth/refresh')
-      || path.contains('/users');
+  bool _isPublicAuthEndpoint(RequestOptions options) {
+    final path = options.path;
+    final method = options.method.toUpperCase();
+
+    return path.contains('/auth/login') ||
+        path.contains('/auth/refresh') ||
+        (method == 'POST' && path.contains('/users'));
   }
 }

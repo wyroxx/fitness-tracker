@@ -5,6 +5,7 @@ class PrimaryButton extends StatelessWidget {
   final double width;
   final double height;
   final VoidCallback onPressed;
+  final bool isEnabled;
 
   const PrimaryButton({
     super.key,
@@ -12,6 +13,7 @@ class PrimaryButton extends StatelessWidget {
     required this.width,
     required this.height,
     required this.onPressed,
+    this.isEnabled = true,
   });
 
   @override
@@ -35,7 +37,7 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
-            onTap: onPressed,
+            onTap: isEnabled ? onPressed : null,
             child: Center(
               child: Text(
                 text,

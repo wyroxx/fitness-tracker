@@ -27,10 +27,15 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvider) == AuthStatus.loading;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: Center(
-        child: Padding(
+        child: isLoading ? 
+        const CircularProgressIndicator(
+          color: Color(0xFF3981E0),
+        ) : Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

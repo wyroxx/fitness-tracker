@@ -10,7 +10,6 @@ final refreshDioProvider = Provider<Dio>((ref) {
       connectTimeout: const Duration(seconds: 8),
       receiveTimeout: const Duration(seconds: 8),
       sendTimeout: const Duration(seconds: 8),
-      validateStatus: (status) => status != null,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -30,7 +29,6 @@ final dioProvider = Provider<Dio>((ref) {
       connectTimeout: const Duration(seconds: 8),
       receiveTimeout: const Duration(seconds: 8),
       sendTimeout: const Duration(seconds: 8),
-      validateStatus: (status) => status != null,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -39,10 +37,7 @@ final dioProvider = Provider<Dio>((ref) {
   );
 
   dio.interceptors.add(
-    AuthInterceptor(
-      tokenStorage: tokenStorage,
-      refreshDio: refreshDio
-    )
+    AuthInterceptor(tokenStorage: tokenStorage, refreshDio: refreshDio),
   );
   return dio;
 });
