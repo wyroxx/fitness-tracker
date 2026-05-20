@@ -10,7 +10,13 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w600
+          ),
+        ),
         backgroundColor: const Color(0xFFF5F5F5),
       ),
       backgroundColor: const Color(0xFFF5F5F5),
