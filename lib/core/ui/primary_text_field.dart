@@ -1,10 +1,12 @@
+import 'package:fitness_tracker/app/theme/app_colors.dart';
+import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
-  
+
   const PrimaryTextField({
     super.key,
     required this.hintText,
@@ -18,28 +20,22 @@ class PrimaryTextField extends StatelessWidget {
       height: 46,
       child: TextField(
         controller: controller,
-        cursorColor: const Color(0xFF3981E0),
+        cursorColor: AppColors.primary,
         obscureText: obscureText,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          height: 1.0,
-        ),
+        style: AppTextStyles.body.copyWith(height: 1.0),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Colors.black45,
+          hintStyle: AppTextStyles.bodyMuted.copyWith(
+            color: AppColors.hint,
             height: 1.0,
           ),
-          fillColor: Colors.white,
+          fillColor: AppColors.surface,
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(16),
-          )
+          ),
         ),
       ),
     );

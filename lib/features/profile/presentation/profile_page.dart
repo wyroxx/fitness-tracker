@@ -9,17 +9,7 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600
-          ),
-        ),
-        backgroundColor: const Color(0xFFF5F5F5),
-      ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      appBar: AppBar(title: const Text('Profile')),
       body: Center(
         child: TextButton(
           onPressed: () async {
@@ -28,7 +18,7 @@ class ProfilePage extends ConsumerWidget {
               context.go('/login');
             }
           },
-          child: const Text('Log out')
+          child: const Text('Log out'),
         ),
       ),
     );

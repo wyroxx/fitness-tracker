@@ -7,11 +7,11 @@ import 'package:go_router/go_router.dart';
 class ExercisesPage extends ConsumerWidget {
   final int muscleGroupId;
   final String title;
-  
+
   const ExercisesPage({
     super.key,
     required this.muscleGroupId,
-    required this.title
+    required this.title,
   });
 
   @override
@@ -22,34 +22,22 @@ class ExercisesPage extends ConsumerWidget {
         title: Text(title),
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: const Icon(
-            Icons.chevron_left_rounded,
-            size: 32,
-          )
+          icon: const Icon(Icons.chevron_left_rounded, size: 32),
         ),
-        backgroundColor: const Color(0xFFF5F5F5),
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
       body: exercisesAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFF3981E0),
-          ),
-        ),
-        error:(error, stackTrace) => const Center(
-          child: Text('Something went wrong'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) =>
+            const Center(child: Text('Something went wrong')),
         data: (exercises) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView.separated(
             itemBuilder: (context, index) => ExerciseCard(
               title: exercises[index].name,
-              description: exercises[index].description
+              description: exercises[index].description,
             ),
             separatorBuilder: (_, _) => const SizedBox(height: 12),
-            itemCount: exercises.length
+            itemCount: exercises.length,
           ),
         ),
       ),

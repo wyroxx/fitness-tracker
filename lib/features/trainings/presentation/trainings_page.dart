@@ -8,17 +8,7 @@ class TrainingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'My Trainings',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600
-          ),
-        ),
-        backgroundColor: const Color(0xFFF5F5F5),
-      ),
-      backgroundColor: const Color(0xFFF5F5F5),
+      appBar: AppBar(title: const Text('My Trainings')),
       floatingActionButton: AddButton(
         size: 60,
         onPressed: () async {

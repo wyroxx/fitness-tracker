@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ExerciseCard extends StatelessWidget {
   final String title;
   final String description;
-  
+
   const ExerciseCard({
     super.key,
     required this.title,
-    required this.description
+    required this.description,
   });
 
   @override
@@ -15,7 +15,7 @@ class ExerciseCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.white
+        color: Colors.white,
       ),
       child: Material(
         color: Colors.transparent,
@@ -32,14 +32,11 @@ class ExerciseCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
-                  )
+                  ),
                 ),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.black45,
-                  ),
+                  style: const TextStyle(fontSize: 15, color: Colors.black45),
                 ),
               ],
             ),

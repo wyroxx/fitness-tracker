@@ -12,21 +12,14 @@ class MuscleGroupsPage extends ConsumerWidget {
     final groupsAsync = ref.watch(muscleGroupsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Exercises',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        ),
+        title: const Text('Exercises'),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.chevron_left_rounded, size: 32),
         ),
-        backgroundColor: const Color(0xFFF5F5F5),
       ),
-      backgroundColor: const Color(0xFFF5F5F5),
       body: groupsAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator(color: Color(0xFF3981E0)),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) =>
             const Center(child: Text('Something went wrong...')),
         data: (groups) => Column(

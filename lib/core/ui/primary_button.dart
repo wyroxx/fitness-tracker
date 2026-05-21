@@ -1,3 +1,5 @@
+import 'package:fitness_tracker/app/theme/app_colors.dart';
+import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -25,10 +27,7 @@ class PrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: const LinearGradient(
-            colors: [
-              Color(0xFF3981E0),
-              Color(0xFF1F467A)
-            ],
+            colors: [AppColors.primary, AppColors.primaryDark],
             stops: [0.3, 1.0],
           ),
         ),
@@ -38,16 +37,7 @@ class PrimaryButton extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: isEnabled ? onPressed : null,
-            child: Center(
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+            child: Center(child: Text(text, style: AppTextStyles.button)),
           ),
         ),
       ),

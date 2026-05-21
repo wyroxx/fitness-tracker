@@ -1,14 +1,11 @@
+import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AddButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double size;
 
-  const AddButton({
-    super.key,
-    required this.onPressed,
-    required this.size
-  });
+  const AddButton({super.key, required this.onPressed, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +16,7 @@ class AddButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(size / 2),
           gradient: const LinearGradient(
-            colors: [
-              Color(0xFF3981E0),
-              Color(0xFF33629F),
-            ],
+            colors: [AppColors.primary, AppColors.primaryMuted],
             stops: [0.25, 1.0],
           ),
         ),

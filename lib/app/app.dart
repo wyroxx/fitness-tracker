@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'router.dart';
+import 'theme/app_theme.dart';
 
 class FitnessApp extends ConsumerWidget {
   const FitnessApp({super.key});
@@ -11,6 +13,7 @@ class FitnessApp extends ConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
       routerConfig: router,
     );
   }

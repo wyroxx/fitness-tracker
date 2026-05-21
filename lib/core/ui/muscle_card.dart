@@ -5,12 +5,12 @@ class MuscleCard extends StatelessWidget {
   final int id;
   final String title;
   final double size;
-  
+
   const MuscleCard({
     super.key,
     required this.title,
     required this.size,
-    required this.id
+    required this.id,
   });
 
   @override
@@ -41,13 +41,13 @@ class MuscleCard extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w600
+                  fontWeight: FontWeight.w600,
                 ),
-              )
+              ),
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }
