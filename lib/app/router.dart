@@ -52,22 +52,29 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/register',
         builder: (context, state) => const RegisterPage(),
       ),
-      ShellRoute(
-        builder: (context, state, child) => MainPage(child: child),
-        routes: [
-          GoRoute(
-            name: 'trainings',
-            path: '/trainings',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: TrainingsPage()
-            ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            MainPage(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: 'trainings',
+                path: '/trainings',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: TrainingsPage()),
+              ),
+            ],
           ),
-          GoRoute(
-            name: 'profile',
-            path: '/profile',
-            pageBuilder: (context, state) => const NoTransitionPage (
-              child: ProfilePage()
-            ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: 'profile',
+                path: '/profile',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: ProfilePage()),
+              ),
+            ],
           ),
         ],
       ),

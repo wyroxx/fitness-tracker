@@ -4,35 +4,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MainPage extends StatelessWidget {
-  final Widget child;
+  final StatefulNavigationShell navigationShell;
 
-  const MainPage({super.key, required this.child});
+  const MainPage({super.key, required this.navigationShell});
 
-  int _getSelectedIndex(BuildContext context) {
-    final location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith('/profile')) {
-      return 1;
-    }
-    return 0;
-  }
-
-  void _onTap(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        context.go('/trainings');
-        break;
-      case 1:
-        context.go('/profile');
-        break;
-    }
+  void _onTap(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = _getSelectedIndex(context);
-
     return Scaffold(
-      body: child,
+      body: navigationShell,
       backgroundColor: AppColors.background,
       bottomNavigationBar: DecoratedBox(
         decoration: BoxDecoration(
@@ -49,8 +35,8 @@ class MainPage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: BottomNavigationBar(
-            currentIndex: selectedIndex,
-            onTap: (index) => _onTap(context, index),
+            currentIndex: navigationShell.currentIndex,
+            onTap: _onTap,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             items: [

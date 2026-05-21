@@ -97,6 +97,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   child: Text(
                     suggestion,
                     textAlign: TextAlign.start,
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
