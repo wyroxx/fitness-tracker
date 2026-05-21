@@ -31,3 +31,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/list.svg
+    - assets/back.png
+    - assets/abs.png
+    - assets/arms.png
+    - assets/legs.png
+    - assets/chest.png
+    - assets/shoulders.png

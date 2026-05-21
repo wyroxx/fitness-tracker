@@ -27,11 +27,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return null;
       }
 
-      if (authStatus == AuthStatus.unauthenticated && location != '/login' && location != '/register') {
+      if (authStatus == AuthStatus.unauthenticated &&
+          location != '/login' &&
+          location != '/register') {
         return '/login';
       }
 
-      if (authStatus == AuthStatus.authenticated && (location == '/login' || location == '/register')) {
+      if (authStatus == AuthStatus.authenticated &&
+          (location == '/login' || location == '/register')) {
         return '/trainings';
       }
 
@@ -50,9 +53,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const RegisterPage(),
       ),
       ShellRoute(
-        builder: (context, state, child) => MainPage(
-          child: child,
-        ),
+        builder: (context, state, child) => MainPage(child: child),
         routes: [
           GoRoute(
             name: 'trainings',
@@ -75,11 +76,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'execisesList',
         path: '/exercises/:muscleGroupId',
         builder: (context, state) {
-          final muscleGroupId = state.pathParameters['muscleGroupId'];
+          final muscleGroupId = int.tryParse(
+            state.pathParameters['muscleGroupId'] ?? '',
+          );
+          final title = state.extra is String
+              ? state.extra as String
+              : 'Exercises';
           if (muscleGroupId == null) {
             return const MuscleGroupsPage();
           }
-          return ExercisesPage(muscleGroupId: int.parse(muscleGroupId));
+          return ExercisesPage(muscleGroupId: muscleGroupId, title: title);
         },
       ),
       GoRoute(

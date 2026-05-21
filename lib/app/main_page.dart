@@ -1,10 +1,11 @@
+import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class MainPage extends StatelessWidget {
   final Widget child;
-  
+
   const MainPage({super.key, required this.child});
 
   int _getSelectedIndex(BuildContext context) {
@@ -39,35 +40,28 @@ class MainPage extends StatelessWidget {
         showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/list.svg',
-              width: 30,
-              height: 30,
-            ),
+            icon: SvgPicture.asset('assets/list.svg', width: 30, height: 30),
             activeIcon: SvgPicture.asset(
               'assets/list.svg',
               width: 30,
               height: 30,
               colorFilter: const ColorFilter.mode(
-                Color(0xFF3981E0),
-                BlendMode.srcIn
+                AppColors.primary,
+                BlendMode.srcIn,
               ),
             ),
             label: 'Trainings',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_rounded,
-              size: 32,
-            ),
+            icon: Icon(Icons.person_rounded, size: 32),
             activeIcon: Icon(
               Icons.person_rounded,
               size: 32,
-              color: Color(0xFF3981E0),
+              color: AppColors.primary,
             ),
             label: 'Profile',
           ),
-        ]
+        ],
       ),
     );
   }
