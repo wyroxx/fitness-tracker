@@ -14,12 +14,9 @@ class TrainingsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('My Trainings')),
       body: trainingsAsync.when(
-        loading: () => const Center(
-          child: CircularProgressIndicator()
-        ),
-        error: (error, stackTrace) => const Center(
-          child: Text('Something went wrong...'),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) =>
+            const Center(child: Text('Something went wrong...')),
         data: (trainings) => Padding(
           padding: const EdgeInsets.only(
             left: 16,
@@ -27,9 +24,10 @@ class TrainingsPage extends ConsumerWidget {
             top: 20,
           ),
           child: ListView.separated(
-            itemBuilder: (context, index) => TrainingCard(training: trainings[index]),
+            itemBuilder: (context, index) =>
+                TrainingCard(training: trainings[index]),
             separatorBuilder: (_, _) => const SizedBox(height: 10),
-            itemCount: trainings.length
+            itemCount: trainings.length,
           ),
         ),
       ),

@@ -49,6 +49,7 @@ class WorkoutSessionWidget extends StatelessWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeInOut,
+          alignment: Alignment.topLeft,
           child: isExpanded
               ? Padding(
                   padding: const EdgeInsets.only(left: 28),
@@ -65,7 +66,10 @@ class WorkoutSessionWidget extends StatelessWidget {
                     ],
                   ),
                 )
-              : const SizedBox.shrink(),
+              : const SizedBox(
+                width: double.infinity,
+                height: 0,
+              ),
         ),
       ],
     );
