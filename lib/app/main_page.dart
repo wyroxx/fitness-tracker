@@ -33,35 +33,56 @@ class MainPage extends StatelessWidget {
 
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: (index) => _onTap(context, index),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/list.svg', width: 30, height: 30),
-            activeIcon: SvgPicture.asset(
-              'assets/list.svg',
-              width: 30,
-              height: 30,
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
-                BlendMode.srcIn,
+      backgroundColor: AppColors.background,
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.14),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: BottomNavigationBar(
+            currentIndex: selectedIndex,
+            onTap: (index) => _onTap(context, index),
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/list.svg',
+                  width: 30,
+                  height: 30,
+                ),
+                activeIcon: SvgPicture.asset(
+                  'assets/list.svg',
+                  width: 30,
+                  height: 30,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'Trainings',
               ),
-            ),
-            label: 'Trainings',
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.person_rounded, size: 32),
+                activeIcon: Icon(
+                  Icons.person_rounded,
+                  size: 32,
+                  color: AppColors.primary,
+                ),
+                label: 'Profile',
+              ),
+            ],
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.person_rounded, size: 32),
-            activeIcon: Icon(
-              Icons.person_rounded,
-              size: 32,
-              color: AppColors.primary,
-            ),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }

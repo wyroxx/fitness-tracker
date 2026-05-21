@@ -58,12 +58,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             name: 'trainings',
             path: '/trainings',
-            builder: (context, state) => const TrainingsPage(),
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: TrainingsPage()
+            ),
           ),
           GoRoute(
             name: 'profile',
             path: '/profile',
-            builder: (context, state) => const ProfilePage(),
+            pageBuilder: (context, state) => const NoTransitionPage (
+              child: ProfilePage()
+            ),
           ),
         ],
       ),
