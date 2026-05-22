@@ -22,4 +22,9 @@ class Training {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'title': title,
+    'sessions': sessions.map((session) => session.toJson()).toList(),
+  };
 }

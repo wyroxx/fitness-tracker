@@ -5,8 +5,15 @@ import 'package:flutter/services.dart';
 
 class SetCard extends StatelessWidget {
   final int index;
+  final TextEditingController weightController;
+  final TextEditingController repsController;
 
-  const SetCard({super.key, required this.index});
+  const SetCard({
+    super.key,
+    required this.index,
+    required this.weightController,
+    required this.repsController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +27,14 @@ class SetCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Set $index',
-            style: AppTextStyles.body.copyWith(fontSize: 14),
+          Text('Set $index', style: AppTextStyles.body.copyWith(fontSize: 14)),
+          _SetInput(
+            controller: weightController,
+            label: 'Weight',
+            suffix: 'kg',
+            width: 34,
           ),
-          const _SetInput(label: 'Weight', suffix: 'kg', width: 34),
-          const _SetInput(label: 'Reps', width: 28),
+          _SetInput(controller: repsController, label: 'Reps', width: 28),
         ],
       ),
     );
@@ -36,8 +45,14 @@ class _SetInput extends StatelessWidget {
   final String label;
   final String? suffix;
   final double width;
+  final TextEditingController controller;
 
-  const _SetInput({required this.label, required this.width, this.suffix});
+  const _SetInput({
+    required this.label,
+    required this.width,
+    this.suffix,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +62,10 @@ class _SetInput extends StatelessWidget {
       children: [
         Text(
           '$label: ',
-          style: AppTextStyles.body.copyWith(fontWeight: FontWeight.normal, fontSize: 13),
+          style: AppTextStyles.body.copyWith(
+            fontWeight: FontWeight.normal,
+            fontSize: 13,
+          ),
         ),
         Flexible(
           child: ConstrainedBox(
@@ -70,10 +88,7 @@ class _SetInput extends StatelessWidget {
           ),
         ),
         if (suffix != null)
-          Text(
-            suffix!,
-            style: AppTextStyles.body.copyWith(fontSize: 13),
-          ),
+          Text(suffix!, style: AppTextStyles.body.copyWith(fontSize: 13)),
       ],
     );
   }

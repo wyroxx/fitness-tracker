@@ -30,10 +30,11 @@ class ExercisesPage extends ConsumerWidget {
         error: (error, stackTrace) =>
             const Center(child: Text('Something went wrong')),
         data: (exercises) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
           child: ListView.separated(
             itemBuilder: (context, index) => ExerciseCard(
               title: exercises[index].name,
+              id: exercises[index].id,
               description: exercises[index].description,
             ),
             separatorBuilder: (_, _) => const SizedBox(height: 12),

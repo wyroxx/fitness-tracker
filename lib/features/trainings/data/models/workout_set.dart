@@ -17,4 +17,11 @@ class WorkoutSet {
     distanceMeters: json['distance_meters'] as int?,
     durationSeconds: json['duration_seconds'] as int?,
   );
+
+  Map<String, dynamic> toJson() => {
+    'reps': reps,
+    'weight_kg': weight,
+    'distance_meters': distanceMeters,
+    'duration_seconds': durationSeconds,
+  };
 }

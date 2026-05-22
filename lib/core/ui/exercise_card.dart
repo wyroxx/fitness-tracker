@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class ExerciseCard extends StatelessWidget {
   final String title;
+  final int id;
   final String description;
 
   const ExerciseCard({
     super.key,
     required this.title,
     required this.description,
+    required this.id,
   });
 
   @override
@@ -21,7 +23,7 @@ class ExerciseCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () => showSetsDialog(context, title),
+          onTap: () => showSetsDialog(context, title, id),
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.all(14),
