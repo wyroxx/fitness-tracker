@@ -73,6 +73,7 @@ class _SetInput extends StatelessWidget {
             child: SizedBox(
               height: 22,
               child: TextField(
+                controller: controller,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 style: AppTextStyles.body.copyWith(fontSize: 13),

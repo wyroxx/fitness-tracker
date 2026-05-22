@@ -34,4 +34,9 @@ class TrainingsRepositoryImpl implements TrainingsRepository {
         .map((json) => Training.fromJson(json as Map<String, dynamic>))
         .toList();
   }
+
+  @override
+  Future<void> createTraining(Training training) async {
+    await _dio.post('/trainings', data: training.toJson());
+  }
 }
