@@ -1,3 +1,4 @@
+import 'package:fitness_tracker/features/workout_editor/presentation/workout_editor.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseCard extends StatelessWidget {
@@ -20,7 +21,7 @@ class ExerciseCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () => showSetsDialog(context, title),
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.all(14),
