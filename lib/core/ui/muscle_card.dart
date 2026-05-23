@@ -1,3 +1,4 @@
+import 'package:fitness_tracker/features/trainings/data/models/workout_session.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,7 +26,16 @@ class MuscleCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () async => await context.push('/exercises/$id', extra: title),
+          onTap: () async {
+            final session = await context.push<WorkoutSession>(
+              '/exercises/$id',
+              extra: title,
+            );
+            if (session == null || !context.mounted) {
+              return;
+            }
+            context.pop(session);
+          },
           borderRadius: BorderRadius.circular(12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -9,7 +9,6 @@ import '../features/exercises/presentation/exercises_page.dart';
 import '../features/exercises/presentation/muscle_groups_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/trainings/presentation/trainings_page.dart';
-import '../features/workout_editor/presentation/add_training_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -98,11 +97,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           }
           return ExercisesPage(muscleGroupId: muscleGroupId, title: title);
         },
-      ),
-      GoRoute(
-        name: 'addTraining',
-        path: '/workout/new',
-        builder: (context, state) => const AddTrainingPage(),
       ),
     ],
   );

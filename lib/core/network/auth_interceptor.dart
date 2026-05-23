@@ -1,13 +1,19 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_tracker/core/network/token_refresher.dart';
 import 'package:fitness_tracker/core/storage/token_storage.dart';
 
 class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _refreshDio;
+  final TokenRefresher _tokenRefresher;
 
-  AuthInterceptor({required TokenStorage tokenStorage, required Dio refreshDio})
-    : _refreshDio = refreshDio,
-      _tokenStorage = tokenStorage;
+  AuthInterceptor({
+    required TokenStorage tokenStorage,
+    required Dio refreshDio,
+    required TokenRefresher tokenRefresher,
+  }) : _refreshDio = refreshDio,
+       _tokenStorage = tokenStorage,
+       _tokenRefresher = tokenRefresher;
 
   @override
   Future<void> onRequest(
@@ -38,39 +44,42 @@ class AuthInterceptor extends Interceptor {
       return;
     }
 
-    final String? refreshToken = await _tokenStorage.getRefreshToken();
-
-    if (refreshToken == null || refreshToken.isEmpty) {
-      await _tokenStorage.clearTokens();
-      handler.next(err);
-      return;
-    }
-
     try {
-      final response = await _refreshDio.post<Map<String, dynamic>>(
-        '/auth/refresh',
-        data: {'refresh_token': refreshToken},
+      final currentAccessToken = await _tokenStorage.getAccessToken();
+      final failedAccessToken = _accessTokenFromHeader(
+        options.headers['Authorization'],
       );
 
-      final data = response.data;
-      if (data == null) {
-        await _tokenStorage.clearTokens();
+      if (currentAccessToken != null &&
+          currentAccessToken.isNotEmpty &&
+          currentAccessToken != failedAccessToken) {
+        options.headers['Authorization'] = 'Bearer $currentAccessToken';
+        final retryResponse = await _refreshDio.fetch(options);
+        handler.resolve(retryResponse);
+        return;
+      }
+
+      final accessToken = await _tokenRefresher.refreshAccessToken();
+
+      if (accessToken == null || accessToken.isEmpty) {
         handler.next(err);
         return;
       }
 
-      await _tokenStorage.saveTokens(
-        accessToken: data['access_token'] as String,
-        refreshToken: data['refresh_token'] as String,
-      );
-
-      options.headers['Authorization'] = 'Bearer ${data['access_token']}';
+      options.headers['Authorization'] = 'Bearer $accessToken';
       final retryResponse = await _refreshDio.fetch(options);
       handler.resolve(retryResponse);
-    } catch (e) {
-      await _tokenStorage.clearTokens();
+    } catch (_) {
       handler.next(err);
     }
+  }
+
+  String? _accessTokenFromHeader(Object? header) {
+    if (header is! String || !header.startsWith('Bearer ')) {
+      return null;
+    }
+
+    return header.substring('Bearer '.length);
   }
 
   bool _isPublicAuthEndpoint(RequestOptions options) {

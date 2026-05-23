@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_tracker/core/network/auth_interceptor.dart';
+import 'package:fitness_tracker/core/network/token_refresher.dart';
 import 'package:fitness_tracker/core/storage/token_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,16 +20,23 @@ final refreshDioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
+final tokenRefresherProvider = Provider<TokenRefresher>((ref) {
+  final refreshDio = ref.watch(refreshDioProvider);
+  final tokenStorage = ref.watch(tokenStorageProvider);
+  return TokenRefresher(refreshDio: refreshDio, tokenStorage: tokenStorage);
+});
+
 final dioProvider = Provider<Dio>((ref) {
   final refreshDio = ref.watch(refreshDioProvider);
   final tokenStorage = ref.watch(tokenStorageProvider);
+  final tokenRefresher = ref.watch(tokenRefresherProvider);
 
   final dio = Dio(
     BaseOptions(
       baseUrl: 'http://localhost:8080',
-      connectTimeout: const Duration(seconds: 8),
-      receiveTimeout: const Duration(seconds: 8),
-      sendTimeout: const Duration(seconds: 8),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      sendTimeout: const Duration(seconds: 10),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -37,7 +45,11 @@ final dioProvider = Provider<Dio>((ref) {
   );
 
   dio.interceptors.add(
-    AuthInterceptor(tokenStorage: tokenStorage, refreshDio: refreshDio),
+    AuthInterceptor(
+      tokenStorage: tokenStorage,
+      refreshDio: refreshDio,
+      tokenRefresher: tokenRefresher,
+    ),
   );
   return dio;
 });

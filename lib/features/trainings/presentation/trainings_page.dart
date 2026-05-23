@@ -1,9 +1,9 @@
 import 'package:fitness_tracker/core/ui/add_button.dart';
 import 'package:fitness_tracker/core/ui/training_card.dart';
 import 'package:fitness_tracker/features/trainings/data/trainings_repository_impl.dart';
+import 'package:fitness_tracker/features/workout_editor/presentation/workout_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class TrainingsPage extends ConsumerWidget {
   const TrainingsPage({super.key});
@@ -33,9 +33,7 @@ class TrainingsPage extends ConsumerWidget {
       ),
       floatingActionButton: AddButton(
         size: 60,
-        onPressed: () async {
-          await context.push('/exercises');
-        },
+        onPressed: () => showModal(context),
       ),
     );
   }

@@ -1,13 +1,17 @@
+import 'package:fitness_tracker/features/workout_editor/presentation/workout_editor.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ExerciseCard extends StatelessWidget {
   final String title;
+  final int id;
   final String description;
 
   const ExerciseCard({
     super.key,
     required this.title,
     required this.description,
+    required this.id,
   });
 
   @override
@@ -20,7 +24,13 @@ class ExerciseCard extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () async {
+            final session = await showSetsDialog(context, title, id);
+            if (session == null || !context.mounted) {
+              return;
+            }
+            context.pop(session);
+          },
           borderRadius: BorderRadius.circular(16),
           child: Padding(
             padding: const EdgeInsets.all(14),
