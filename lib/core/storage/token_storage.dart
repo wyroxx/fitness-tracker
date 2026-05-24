@@ -1,20 +1,19 @@
+import 'package:fitness_tracker/core/logging/app_logger.dart';
 import 'package:fitness_tracker/core/storage/storage_exception.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 
 final tokenStorageProvider = Provider<TokenStorage>((ref) {
-  return TokenStorage();
+  final logger = ref.watch(loggerProvider);
+  return TokenStorage(logger);
 });
 
 class TokenStorage {
   final _storage = const FlutterSecureStorage();
-  final _logger = Logger(
-    printer: SimplePrinter(
-      printTime: false,
-      colors: false
-    )
-  );
+  final Logger _logger;
+
+  TokenStorage(this._logger);
 
   Future<void> saveTokens({
     required String accessToken,
