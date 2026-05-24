@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_tracker/core/network/api_exception_mapper.dart';
 import 'package:fitness_tracker/core/network/dio_provider.dart';
 import 'package:fitness_tracker/features/trainings/data/models/training.dart';
 import 'package:fitness_tracker/features/trainings/domain/trainings_repository.dart';
@@ -21,22 +22,30 @@ class TrainingsRepositoryImpl implements TrainingsRepository {
 
   @override
   Future<List<Training>> getTrainings() async {
-    final response = await _dio.get<Map<String, dynamic>>('/trainings');
-    final data = response.data;
+    try {
+      final response = await _dio.get<Map<String, dynamic>>('/trainings');
+      final data = response.data;
 
-    if (data == null) {
-      return [];
+      if (data == null) {
+        return [];
+      }
+
+      final items = data['items'] as List<dynamic>? ?? [];
+
+      return items
+          .map((json) => Training.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
-
-    final items = data['items'] as List<dynamic>? ?? [];
-
-    return items
-        .map((json) => Training.fromJson(json as Map<String, dynamic>))
-        .toList();
   }
 
   @override
   Future<void> createTraining(Training training) async {
-    await _dio.post('/trainings', data: training.toJson());
+    try {
+      await _dio.post('/trainings', data: training.toJson());
+    } on DioException catch (e) {
+      throw mapDioException(e);
+    }
   }
 }

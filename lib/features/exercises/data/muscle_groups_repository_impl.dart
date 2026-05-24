@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:fitness_tracker/core/network/api_exception.dart';
+import 'package:fitness_tracker/core/network/api_exception_mapper.dart';
 import 'package:fitness_tracker/core/network/dio_provider.dart';
 import 'package:fitness_tracker/features/exercises/data/models/muscle_group.dart';
 import 'package:fitness_tracker/features/exercises/domain/muscle_groups_repository.dart';
@@ -29,8 +29,8 @@ class MuscleGroupsRepositoryImpl implements MuscleGroupsRepository {
         return [];
       }
       return data.map((json) => MuscleGroup.fromJson(json)).toList();
-    } catch (e) {
-      throw ApiException(e.toString());
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
   }
 }

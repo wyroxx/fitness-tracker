@@ -1,6 +1,6 @@
 import 'package:fitness_tracker/core/ui/add_button.dart';
-import 'package:fitness_tracker/core/ui/training_card.dart';
 import 'package:fitness_tracker/features/trainings/data/trainings_repository_impl.dart';
+import 'package:fitness_tracker/features/trainings/presentation/widgets/training_card.dart';
 import 'package:fitness_tracker/features/workout_editor/presentation/workout_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

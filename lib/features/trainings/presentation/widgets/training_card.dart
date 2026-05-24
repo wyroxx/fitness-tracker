@@ -1,7 +1,7 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
-import 'package:fitness_tracker/core/ui/workout_session_widget.dart';
 import 'package:fitness_tracker/features/trainings/data/models/training.dart';
+import 'package:fitness_tracker/features/trainings/presentation/widgets/workout_session_widget.dart';
 import 'package:flutter/material.dart';
 
 class TrainingCard extends StatefulWidget {

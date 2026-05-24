@@ -1,8 +1,8 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
-import 'package:fitness_tracker/core/ui/ask_button.dart';
 import 'package:fitness_tracker/features/auth/presentation/auth_controller.dart';
 import 'package:fitness_tracker/features/profile/data/profile_repository_impl.dart';
+import 'package:fitness_tracker/features/profile/presentation/widgets/ask_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';

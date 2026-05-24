@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_tracker/core/network/api_exception.dart';
+import 'package:fitness_tracker/core/network/api_exception_mapper.dart';
 import 'package:fitness_tracker/core/network/dio_provider.dart';
 import 'package:fitness_tracker/features/profile/data/models/profile_data.dart';
 import 'package:fitness_tracker/features/profile/data/models/stats.dart';
@@ -13,7 +15,7 @@ final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
 
 final profileDataProvider = FutureProvider<ProfileData>((ref) async {
   final repository = ref.watch(profileRepositoryProvider);
-  
+
   final userFuture = repository.getUser();
   final statsFuture = repository.getStats();
 
@@ -30,35 +32,47 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<UserStats> getStats() async {
-    final response = await _dio.get<Map<String, dynamic>>('/profile/stats');
+    try {
+      final response = await _dio.get<Map<String, dynamic>>('/profile/stats');
 
-    final data = response.data;
-    if (data == null) {
-      throw Exception('Stats response is empty');
+      final data = response.data;
+      if (data == null) {
+        throw const UnknownApiException('Stats response is empty');
+      }
+
+      return UserStats.fromJson(data);
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
-
-    return UserStats.fromJson(data);
   }
 
   @override
   Future<String> getSuggestion() async {
-    final response = await _dio.get<Map<String, dynamic>>('/suggest-workout');
-    final data = response.data;
-    if (data == null) {
-      return 'Nothing here. Try later.';
+    try {
+      final response = await _dio.get<Map<String, dynamic>>('/suggest-workout');
+      final data = response.data;
+      if (data == null) {
+        return 'Nothing here. Try later.';
+      }
+      return data['suggestion'] as String;
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
-    return data['suggestion'] as String;
   }
 
   @override
   Future<User> getUser() async {
-    final response = await _dio.get<Map<String, dynamic>>('/users/me');
+    try {
+      final response = await _dio.get<Map<String, dynamic>>('/users/me');
 
-    final data = response.data;
-    if (data == null) {
-      throw Exception('User response is empty');
+      final data = response.data;
+      if (data == null) {
+        throw const UnknownApiException('User response is empty');
+      }
+
+      return User.fromJson(data);
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
-
-    return User.fromJson(data);
   }
 }

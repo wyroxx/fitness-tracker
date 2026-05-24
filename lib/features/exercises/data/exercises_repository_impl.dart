@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:fitness_tracker/core/network/api_exception.dart';
+import 'package:fitness_tracker/core/network/api_exception_mapper.dart';
 import 'package:fitness_tracker/core/network/dio_provider.dart';
 import 'package:fitness_tracker/features/exercises/data/models/exercise.dart';
 import 'package:fitness_tracker/features/exercises/domain/exercises_repository.dart';
@@ -29,8 +29,8 @@ class ExercisesRepositoryImpl implements ExercisesRepository {
         return [];
       }
       return data.map((json) => Exercise.fromJson(json)).toList();
-    } catch (e) {
-      throw ApiException(e.toString());
+    } on DioException catch (e) {
+      throw mapDioException(e);
     }
   }
 }

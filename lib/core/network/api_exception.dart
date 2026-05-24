@@ -1,5 +1,5 @@
-class ApiException implements Exception {
-  const ApiException([this.message = 'API error']);
+sealed class ApiException implements Exception {
+  const ApiException(this.message);
 
   final String message;
 

@@ -49,14 +49,10 @@ class AuthRepositoryImpl implements AuthRepository {
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
       );
-    } on BadRequestException catch (e) {
+    } on ApiException catch (e) {
       throw AuthException(e.message);
     } on StorageException {
-      throw const AuthException('Could not save the session');
-    } on UnauthorizedException catch (e) {
-      throw AuthException(e.message);
-    } catch (e) {
-      throw const AuthException('Could not login into account');
+      throw const AuthException('Could not save tokens');
     }
   }
 
@@ -82,11 +78,9 @@ class AuthRepositoryImpl implements AuthRepository {
         name: name,
       );
       await _dataSource.register(request);
-    } on BadRequestException catch (e) {
+    } on ApiException catch (e) {
       throw AuthException(e.message);
-    } on ServerException catch (e) {
-      throw AuthException(e.message);
-    } catch (e) {
+    } on StorageException {
       throw const AuthException('Could not create the account');
     }
   }

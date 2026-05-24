@@ -1,9 +1,9 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:fitness_tracker/core/ui/primary_button.dart';
-import 'package:fitness_tracker/core/ui/set_card.dart';
 import 'package:fitness_tracker/features/trainings/data/models/workout_session.dart';
 import 'package:fitness_tracker/features/trainings/data/models/workout_set.dart';
+import 'package:fitness_tracker/features/workout_editor/presentation/widgets/set_card.dart';
 import 'package:flutter/material.dart';
 
 Future<WorkoutSession?> showSetsDialog(
