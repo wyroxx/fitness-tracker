@@ -19,7 +19,7 @@ class AskButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
             color: const Color(0xFFD9E4F2),
-            borderRadius: BorderRadius.circular(15)
+            borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

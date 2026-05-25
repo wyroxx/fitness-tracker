@@ -18,11 +18,7 @@ class TrainingsPage extends ConsumerWidget {
         error: (error, stackTrace) =>
             const Center(child: Text('Something went wrong...')),
         data: (trainings) => Padding(
-          padding: const EdgeInsets.only(
-            left: 16,
-            right: 16,
-            top: 20,
-          ),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
           child: ListView.separated(
             itemBuilder: (context, index) =>
                 TrainingCard(training: trainings[index]),

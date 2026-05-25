@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fitness_tracker/core/logging/app_logger.dart';
 import 'package:fitness_tracker/core/network/api_exception_mapper.dart';
 import 'package:fitness_tracker/core/network/dio_provider.dart';
+import 'package:fitness_tracker/features/trainings/data/models/create_training_request.dart';
 import 'package:fitness_tracker/features/trainings/data/models/training.dart';
 import 'package:fitness_tracker/features/trainings/domain/trainings_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,14 +48,25 @@ class TrainingsRepositoryImpl implements TrainingsRepository {
   }
 
   @override
-  Future<void> createTraining(Training training) async {
+  Future<void> createTraining(CreateTrainingRequest request) async {
     try {
-      await _dio.post('/trainings', data: training.toJson());
+      await _dio.post('/trainings', data: request.toJson());
       _logger.i('Created new training successfully');
     } on DioException catch (e) {
       final exception = mapDioException(e);
       _logger.w('Could not create training: ${exception.message}');
       throw exception;
+    }
+  }
+
+  @override
+  Future<void> deleteTraining(int id) async {
+    try {
+      await _dio.delete('/trainings/$id');
+      _logger.i('Deleted training $id');
+    } on DioException catch (e) {
+      _logger.w('Could not delete training $id');
+      throw mapDioException(e);
     }
   }
 }

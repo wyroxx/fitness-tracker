@@ -1,7 +1,7 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:fitness_tracker/core/ui/primary_button.dart';
-import 'package:fitness_tracker/features/trainings/data/models/training.dart';
+import 'package:fitness_tracker/features/trainings/data/models/create_training_request.dart';
 import 'package:fitness_tracker/features/trainings/data/models/workout_session.dart';
 import 'package:fitness_tracker/features/trainings/data/trainings_repository_impl.dart';
 import 'package:fitness_tracker/features/workout_editor/presentation/widgets/workout_session_card.dart';
@@ -50,14 +50,13 @@ class _WorkoutEditorSheetState extends ConsumerState<WorkoutEditorSheet> {
     });
 
     final title = _titleController.text.trim();
-    final training = Training(
+    final request = CreateTrainingRequest(
       title: title.isEmpty ? 'New workout' : title,
-      date: '',
       sessions: List.unmodifiable(_sessions),
     );
 
     try {
-      await ref.read(trainingsRepositoryProvider).createTraining(training);
+      await ref.read(trainingsRepositoryProvider).createTraining(request);
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(

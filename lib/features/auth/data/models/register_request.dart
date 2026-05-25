@@ -6,7 +6,7 @@ class RegisterRequest {
   RegisterRequest({
     required this.email,
     required this.password,
-    required this.name
+    required this.name,
   });
 
   Map<String, dynamic> toJson() => {

@@ -6,5 +6,4 @@ class ProfileData {
   final UserStats stats;
 
   const ProfileData({required this.user, required this.stats});
-  
 }

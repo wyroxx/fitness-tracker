@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:fitness_tracker/features/auth/data/auth_repository_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum AuthStatus {
-  loading,
-  authenticated,
-  unauthenticated,
-}
+enum AuthStatus { loading, authenticated, unauthenticated }
 
-final authControllerProvider = NotifierProvider<AuthController, AuthStatus>(AuthController.new);
+final authControllerProvider = NotifierProvider<AuthController, AuthStatus>(
+  AuthController.new,
+);
 
 class AuthController extends Notifier<AuthStatus> {
   @override
@@ -30,10 +28,7 @@ class AuthController extends Notifier<AuthStatus> {
     }
   }
 
-  Future<void> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> login({required String email, required String password}) async {
     state = AuthStatus.loading;
     try {
       final repository = ref.read(authRepositoryProvider);
@@ -53,11 +48,7 @@ class AuthController extends Notifier<AuthStatus> {
     state = AuthStatus.loading;
     try {
       final repository = ref.read(authRepositoryProvider);
-      await repository.register(
-        name: name,
-        email: email,
-        password: password
-      );
+      await repository.register(name: name, email: email, password: password);
       state = AuthStatus.unauthenticated;
     } catch (e) {
       state = AuthStatus.unauthenticated;

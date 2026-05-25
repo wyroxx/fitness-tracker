@@ -7,7 +7,7 @@ ApiException mapDioException(DioException error) {
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
       return const TimeoutException();
-    
+
     case DioExceptionType.connectionError:
       return const NetworkException();
 
@@ -16,10 +16,10 @@ ApiException mapDioException(DioException error) {
 
     case DioExceptionType.badCertificate:
       return const NetworkException('Bad certificate');
-    
+
     case DioExceptionType.badResponse:
       return _mapStatusCode(error.response);
-    
+
     case DioExceptionType.unknown:
       return const UnknownApiException();
   }

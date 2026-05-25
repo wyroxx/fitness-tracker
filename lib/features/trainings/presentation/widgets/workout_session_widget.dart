@@ -66,10 +66,7 @@ class WorkoutSessionWidget extends StatelessWidget {
                     ],
                   ),
                 )
-              : const SizedBox(
-                width: double.infinity,
-                height: 0,
-              ),
+              : const SizedBox(width: double.infinity, height: 0),
         ),
       ],
     );
