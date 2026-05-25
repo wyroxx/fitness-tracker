@@ -1,4 +1,7 @@
 class UserStats {
+  static const emptySuggestion = 'No insight yet. Add workouts to get one.';
+  static const emptyLastTrainingDate = 'No trainings yet';
+
   final int totalWorkouts;
   final String suggestion;
   final String lastTrainingDate;
@@ -14,10 +17,21 @@ class UserStats {
   });
 
   factory UserStats.fromJson(Map<String, dynamic> json) => UserStats(
-    totalWorkouts: json['total_workouts'] as int,
-    suggestion: json['ai_insight'] as String,
-    lastTrainingDate: json['last_training_at'] as String,
-    trainingsThisWeek: json['trainings_this_week'] as int,
-    totalExerciseSessions: json['total_exercise_sessions'] as int,
+    totalWorkouts: json['total_workouts'] as int? ?? 0,
+    suggestion: _readString(json['ai_insight'], emptySuggestion),
+    lastTrainingDate: _readString(
+      json['last_training_at'],
+      emptyLastTrainingDate,
+    ),
+    trainingsThisWeek: json['trainings_this_week'] as int? ?? 0,
+    totalExerciseSessions: json['total_exercise_sessions'] as int? ?? 0,
   );
+}
+
+String _readString(Object? value, String fallback) {
+  if (value is String && value.trim().isNotEmpty) {
+    return value;
+  }
+
+  return fallback;
 }

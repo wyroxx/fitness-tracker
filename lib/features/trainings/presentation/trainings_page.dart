@@ -1,4 +1,6 @@
 import 'package:fitness_tracker/core/ui/add_button.dart';
+import 'package:fitness_tracker/core/ui/app_empty_state.dart';
+import 'package:fitness_tracker/core/ui/app_error_state.dart';
 import 'package:fitness_tracker/features/trainings/data/trainings_repository_impl.dart';
 import 'package:fitness_tracker/features/trainings/presentation/widgets/training_card.dart';
 import 'package:fitness_tracker/features/workout_editor/presentation/workout_editor.dart';
@@ -16,15 +18,17 @@ class TrainingsPage extends ConsumerWidget {
       body: trainingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) =>
-            const Center(child: Text('Something went wrong...')),
+            const AppErrorState(title: 'Error loading trainings'),
         data: (trainings) => Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
-          child: ListView.separated(
-            itemBuilder: (context, index) =>
-                TrainingCard(training: trainings[index]),
-            separatorBuilder: (_, _) => const SizedBox(height: 10),
-            itemCount: trainings.length,
-          ),
+          child: trainings.isEmpty
+              ? const AppEmptyState(title: 'No trainings yet')
+              : ListView.separated(
+                  itemBuilder: (context, index) =>
+                      TrainingCard(training: trainings[index]),
+                  separatorBuilder: (_, _) => const SizedBox(height: 10),
+                  itemCount: trainings.length,
+                ),
         ),
       ),
       floatingActionButton: AddButton(

@@ -61,3 +61,5 @@ flutter:
     - assets/shoulders.png
     - assets/avatar.svg
     - assets/biceps_splash.png
+    - assets/empty_state.png
+    - assets/error_state.png

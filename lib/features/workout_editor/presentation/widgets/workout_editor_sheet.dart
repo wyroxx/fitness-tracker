@@ -115,7 +115,7 @@ class _WorkoutEditorSheetState extends ConsumerState<WorkoutEditorSheet> {
                     color: AppColors.hint,
                     fontSize: 18,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: const BorderSide(

@@ -1,3 +1,5 @@
+import 'package:fitness_tracker/core/ui/app_empty_state.dart';
+import 'package:fitness_tracker/core/ui/app_error_state.dart';
 import 'package:fitness_tracker/features/exercises/data/exercises_repository_impl.dart';
 import 'package:fitness_tracker/features/exercises/presentation/widgets/exercise_card.dart';
 import 'package:flutter/material.dart';
@@ -28,18 +30,20 @@ class ExercisesPage extends ConsumerWidget {
       body: exercisesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) =>
-            const Center(child: Text('Something went wrong')),
+            const AppErrorState(title: 'Error loading exercises'),
         data: (exercises) => Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-          child: ListView.separated(
-            itemBuilder: (context, index) => ExerciseCard(
-              title: exercises[index].name,
-              id: exercises[index].id,
-              description: exercises[index].description,
-            ),
-            separatorBuilder: (_, _) => const SizedBox(height: 12),
-            itemCount: exercises.length,
-          ),
+          child: exercises.isEmpty
+              ? const AppEmptyState(title: 'No exercises found')
+              : ListView.separated(
+                  itemBuilder: (context, index) => ExerciseCard(
+                    title: exercises[index].name,
+                    id: exercises[index].id,
+                    description: exercises[index].description,
+                  ),
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
+                  itemCount: exercises.length,
+                ),
         ),
       ),
     );

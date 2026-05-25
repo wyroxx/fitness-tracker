@@ -1,5 +1,6 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
+import 'package:fitness_tracker/core/ui/app_error_state.dart';
 import 'package:fitness_tracker/features/auth/presentation/auth_controller.dart';
 import 'package:fitness_tracker/features/profile/data/profile_repository_impl.dart';
 import 'package:fitness_tracker/features/profile/presentation/widgets/ask_button.dart';
@@ -51,7 +52,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       body: profileDataAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) =>
-            const Center(child: Text('Something went wrong...')),
+            const AppErrorState(title: 'Error loading profile'),
         data: (profileData) {
           final suggestion = _suggestion ?? profileData.stats.suggestion;
           return Center(
@@ -106,7 +107,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 4),
                 AskButton(
                   isLoading: _isGeneratingSuggestion,
                   onPressed: _generateSuggestion,

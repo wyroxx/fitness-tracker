@@ -58,10 +58,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final response = await _dio.get<Map<String, dynamic>>('/suggest-workout');
       final data = response.data;
       if (data == null) {
-        return 'Nothing here. Try later.';
+        return UserStats.emptySuggestion;
       }
       _logger.i('Parsed new workout suggestion');
-      return data['suggestion'] as String;
+      final suggestion = data['suggestion'];
+      if (suggestion is String && suggestion.trim().isNotEmpty) {
+        return suggestion;
+      }
+
+      return UserStats.emptySuggestion;
     } on DioException catch (e) {
       final exception = mapDioException(e);
       _logger.w('Could not load workout suggestion: ${exception.message}');
