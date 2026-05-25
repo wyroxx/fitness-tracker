@@ -17,6 +17,7 @@ class AppEmptyState extends StatelessWidget {
             'assets/empty_state.png',
             height: screenWidth * 0.8,
             width: screenWidth * 0.8,
+            colorBlendMode: BlendMode.src,
           ),
           const SizedBox(height: 8),
           Text(title, style: AppTextStyles.appBarTitle),

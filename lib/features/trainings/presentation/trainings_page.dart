@@ -24,8 +24,10 @@ class TrainingsPage extends ConsumerWidget {
           child: trainings.isEmpty
               ? const AppEmptyState(title: 'No trainings yet')
               : ListView.separated(
-                  itemBuilder: (context, index) =>
-                      TrainingCard(training: trainings[index]),
+                  itemBuilder: (context, index) => TrainingCard(
+                    key: ValueKey(trainings[index].id),
+                    training: trainings[index],
+                  ),
                   separatorBuilder: (_, _) => const SizedBox(height: 10),
                   itemCount: trainings.length,
                 ),

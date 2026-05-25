@@ -78,12 +78,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(
-        name: 'execises',
+        name: 'exercises',
         path: '/exercises',
         builder: (context, state) => const MuscleGroupsPage(),
       ),
       GoRoute(
-        name: 'execisesList',
+        name: 'exercisesList',
         path: '/exercises/:muscleGroupId',
         builder: (context, state) {
           final muscleGroupId = int.tryParse(
