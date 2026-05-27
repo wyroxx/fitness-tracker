@@ -1,5 +1,6 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
+import 'package:fitness_tracker/core/ui/adaptive_dialog.dart';
 import 'package:fitness_tracker/core/ui/app_error_state.dart';
 import 'package:fitness_tracker/features/auth/presentation/auth_controller.dart';
 import 'package:fitness_tracker/features/profile/data/profile_repository_impl.dart';
@@ -41,6 +42,26 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           _isGeneratingSuggestion = false;
         });
       }
+    }
+  }
+
+  Future<void> _logout() async {
+    final confirmed = await showAdaptiveConfirmationDialog(
+      context,
+      title: 'Log out?',
+      message: 'You will need to sign in again to continue tracking workouts.',
+      confirmText: 'Log out',
+      isDestructive: true,
+    );
+
+    if (!confirmed || !mounted) {
+      return;
+    }
+
+    await ref.read(authControllerProvider.notifier).logout();
+
+    if (mounted) {
+      context.go('/login');
     }
   }
 
@@ -115,12 +136,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: TextButton(
-                    onPressed: () async {
-                      await ref.read(authControllerProvider.notifier).logout();
-                      if (context.mounted) {
-                        context.go('/login');
-                      }
-                    },
+                    onPressed: _logout,
                     child: const Text(
                       'Log out',
                       style: TextStyle(

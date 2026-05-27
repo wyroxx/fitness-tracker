@@ -1,6 +1,8 @@
 import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:fitness_tracker/core/ui/primary_button.dart';
+import 'package:fitness_tracker/core/ui/snack_bar.dart';
+import 'package:fitness_tracker/features/profile/data/profile_repository_impl.dart';
 import 'package:fitness_tracker/features/trainings/data/models/create_training_request.dart';
 import 'package:fitness_tracker/features/trainings/data/models/workout_session.dart';
 import 'package:fitness_tracker/features/trainings/data/trainings_repository_impl.dart';
@@ -57,11 +59,21 @@ class _WorkoutEditorSheetState extends ConsumerState<WorkoutEditorSheet> {
 
     try {
       await ref.read(trainingsRepositoryProvider).createTraining(request);
+      ref.invalidate(profileDataProvider);
+      if (mounted) {
+        showAppToast(
+          context,
+          message: 'Training added',
+          type: AppToastType.success,
+        );
+      }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(
+        showAppToast(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Could not save workout')));
+          message: 'Could not save workout',
+          type: AppToastType.error,
+        );
       }
       return;
     } finally {
