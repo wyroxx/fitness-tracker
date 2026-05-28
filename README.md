@@ -2,6 +2,14 @@
 
 Flutter app for recording workouts, managing exercise sets, and tracking personal training progress.
 
+## Preview
+
+<p align="center">
+  <img src="assets/readme/login.png" width="260" />
+  <img src="assets/readme/profile.png" width="260" />
+  <img src="assets/readme/trainings.png" width="260" />
+</p>
+
 ## Features
 
 - Email/password authentication with persisted access and refresh tokens.

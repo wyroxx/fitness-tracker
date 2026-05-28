@@ -93,6 +93,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         }
                         return null;
                       },
+                      keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 10),
                     PrimaryTextField(
@@ -100,6 +101,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       obscureText: false,
                       controller: _emailController,
                       validator: ref.read(validatorProvider).validateEmail,
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 10),
                     PrimaryTextField(
@@ -107,6 +109,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       obscureText: true,
                       controller: _passwordController,
                       validator: ref.read(validatorProvider).validatePassword,
+                      keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 10),
                     PrimaryButton(

@@ -84,6 +84,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       obscureText: false,
                       controller: _emailController,
                       validator: ref.read(validatorProvider).validateEmail,
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 10),
                     PrimaryTextField(
@@ -91,6 +92,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       obscureText: true,
                       controller: _passwordController,
                       validator: ref.read(validatorProvider).validatePassword,
+                      keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 10),
                     PrimaryButton(
