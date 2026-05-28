@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fitness_tracker/core/network/auth_session_events.dart';
 import 'package:fitness_tracker/features/auth/data/auth_repository_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,20 +13,33 @@ final authControllerProvider = NotifierProvider<AuthController, AuthStatus>(
 class AuthController extends Notifier<AuthStatus> {
   @override
   AuthStatus build() {
+    ref.listen<int>(authSessionEventsProvider, (_, _) {
+      state = AuthStatus.unauthenticated;
+    });
     unawaited(_checkAuthStatus());
     return AuthStatus.loading;
   }
 
   Future<void> _checkAuthStatus() async {
-    final repository = ref.read(authRepositoryProvider);
-
-    final isAuthenticated = await repository.isAuthenticated();
-
-    if (isAuthenticated) {
-      state = AuthStatus.authenticated;
-    } else {
+    try {
+      final repository = ref.read(authRepositoryProvider);
+      final isAuthenticated = await repository.isAuthenticated();
+      if (isAuthenticated) {
+        state = AuthStatus.authenticated;
+      } else {
+        state = AuthStatus.unauthenticated;
+      }
+    } catch (_) {
+      await _clearSession();
       state = AuthStatus.unauthenticated;
     }
+  }
+
+  Future<void> _clearSession() async {
+    try {
+      final repository = ref.read(authRepositoryProvider);
+      await repository.clearSession();
+    } catch (_) {}
   }
 
   Future<void> login({required String email, required String password}) async {

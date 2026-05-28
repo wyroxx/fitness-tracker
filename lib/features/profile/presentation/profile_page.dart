@@ -2,6 +2,7 @@ import 'package:fitness_tracker/app/theme/app_colors.dart';
 import 'package:fitness_tracker/app/theme/app_text_styles.dart';
 import 'package:fitness_tracker/core/ui/adaptive_dialog.dart';
 import 'package:fitness_tracker/core/ui/app_error_state.dart';
+import 'package:fitness_tracker/core/ui/snack_bar.dart';
 import 'package:fitness_tracker/features/auth/presentation/auth_controller.dart';
 import 'package:fitness_tracker/features/profile/data/profile_repository_impl.dart';
 import 'package:fitness_tracker/features/profile/presentation/widgets/ask_button.dart';
@@ -35,11 +36,17 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       }
       setState(() {
         _suggestion = suggestion;
+        _isGeneratingSuggestion = false;
       });
-    } finally {
+    } catch (e) {
       if (mounted) {
         setState(() {
           _isGeneratingSuggestion = false;
+          showAppToast(
+            context,
+            message: 'Failed to generate suggestion',
+            type: AppToastType.error,
+          );
         });
       }
     }
@@ -72,8 +79,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       appBar: AppBar(title: const Text('Profile')),
       body: profileDataAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            const AppErrorState(title: 'Error loading profile'),
+        error: (error, stackTrace) => AppErrorState(
+          title: 'Error loading profile',
+          onRetry: () => ref.invalidate(profileDataProvider),
+        ),
         data: (profileData) {
           final suggestion = _suggestion ?? profileData.stats.suggestion;
           return Center(

@@ -9,5 +9,7 @@ abstract interface class AuthRepository {
 
   Future<void> logout();
 
+  Future<void> clearSession();
+
   Future<bool> isAuthenticated();
 }

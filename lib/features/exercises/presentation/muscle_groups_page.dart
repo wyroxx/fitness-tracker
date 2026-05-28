@@ -22,8 +22,10 @@ class MuscleGroupsPage extends ConsumerWidget {
       ),
       body: groupsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            const AppErrorState(title: 'Error loading muscle groups'),
+        error: (error, stackTrace) => AppErrorState(
+          title: 'Error loading muscle groups',
+          onRetry: () => ref.invalidate(muscleGroupsProvider),
+        ),
         data: (groups) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

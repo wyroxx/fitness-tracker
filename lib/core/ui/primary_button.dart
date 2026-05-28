@@ -20,15 +20,20 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = AppTextStyles.button.copyWith(color: Colors.white);
+
     return SizedBox(
       width: width,
       height: height,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          gradient: const LinearGradient(
-            colors: [AppColors.primary, AppColors.primaryDark],
-            stops: [0.3, 1.0],
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary.withValues(alpha: isEnabled ? null : 0.8),
+              AppColors.primaryDark.withValues(alpha: isEnabled ? null : 0.8),
+            ],
+            stops: const [0.3, 1.0],
           ),
         ),
         child: Material(
@@ -37,7 +42,7 @@ class PrimaryButton extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: isEnabled ? onPressed : null,
-            child: Center(child: Text(text, style: AppTextStyles.button)),
+            child: Center(child: Text(text, style: textStyle)),
           ),
         ),
       ),

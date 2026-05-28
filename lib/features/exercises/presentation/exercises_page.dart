@@ -29,8 +29,10 @@ class ExercisesPage extends ConsumerWidget {
       ),
       body: exercisesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            const AppErrorState(title: 'Error loading exercises'),
+        error: (error, stackTrace) => AppErrorState(
+          title: 'Error loading exercises',
+          onRetry: () => ref.invalidate(exercisesProvider(muscleGroupId)),
+        ),
         data: (exercises) => Padding(
           padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
           child: exercises.isEmpty

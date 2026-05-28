@@ -7,12 +7,10 @@ Flutter app for recording workouts, managing exercise sets, and tracking persona
 <p align="center">
   <img src="assets/readme/login.png" width="230" />
   &nbsp;&nbsp;
-  <img src="assets/readme/profile.png" width="230" />
-  &nbsp;&nbsp;
   <img src="assets/readme/trainings.png" width="230" />
+  &nbsp;&nbsp;
+  <img src="assets/readme/profile.png" width="230" />
 </p>
-
-<br />
 
 <p align="center">
   <img src="assets/readme/new_workout.png" width="230" />

@@ -66,6 +66,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> clearSession() async {
+    await _tokenStorage.clearTokens();
+  }
+
+  @override
   Future<void> register({
     required String name,
     required String email,

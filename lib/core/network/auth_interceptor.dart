@@ -6,14 +6,17 @@ class AuthInterceptor extends Interceptor {
   final TokenStorage _tokenStorage;
   final Dio _refreshDio;
   final TokenRefresher _tokenRefresher;
+  final void Function() _onSessionExpired;
 
   AuthInterceptor({
     required TokenStorage tokenStorage,
     required Dio refreshDio,
     required TokenRefresher tokenRefresher,
+    required void Function() onSessionExpired,
   }) : _refreshDio = refreshDio,
        _tokenStorage = tokenStorage,
-       _tokenRefresher = tokenRefresher;
+       _tokenRefresher = tokenRefresher,
+       _onSessionExpired = onSessionExpired;
 
   @override
   Future<void> onRequest(
@@ -62,6 +65,7 @@ class AuthInterceptor extends Interceptor {
       final accessToken = await _tokenRefresher.refreshAccessToken();
 
       if (accessToken == null || accessToken.isEmpty) {
+        _onSessionExpired();
         handler.next(err);
         return;
       }
@@ -69,7 +73,13 @@ class AuthInterceptor extends Interceptor {
       options.headers['Authorization'] = 'Bearer $accessToken';
       final retryResponse = await _refreshDio.fetch(options);
       handler.resolve(retryResponse);
+    } on DioException catch (retryError) {
+      if (retryError.response?.statusCode == 401) {
+        _onSessionExpired();
+      }
+      handler.next(err);
     } catch (_) {
+      _onSessionExpired();
       handler.next(err);
     }
   }

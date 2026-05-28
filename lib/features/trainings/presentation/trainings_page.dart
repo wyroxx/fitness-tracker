@@ -17,8 +17,10 @@ class TrainingsPage extends ConsumerWidget {
       appBar: AppBar(title: const Text('My Trainings')),
       body: trainingsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) =>
-            const AppErrorState(title: 'Error loading trainings'),
+        error: (error, stackTrace) => AppErrorState(
+          title: 'Error loading trainings',
+          onRetry: () => ref.invalidate(trainingsProvider),
+        ),
         data: (trainings) => Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
           child: trainings.isEmpty
