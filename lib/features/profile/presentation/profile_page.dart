@@ -80,7 +80,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             child: Column(
               children: [
                 const Spacer(),
-                SvgPicture.asset('assets/avatar.svg', height: 160, width: 160),
+                SvgPicture.asset(
+                  'assets/images/avatar.svg',
+                  height: 160,
+                  width: 160,
+                ),
                 const SizedBox(height: 12),
                 Text(profileData.user.name, style: AppTextStyles.sectionTitle),
                 const Text(

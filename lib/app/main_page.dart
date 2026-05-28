@@ -42,12 +42,12 @@ class MainPage extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  'assets/list.svg',
+                  'assets/images/list.svg',
                   width: 30,
                   height: 30,
                 ),
                 activeIcon: SvgPicture.asset(
-                  'assets/list.svg',
+                  'assets/images/list.svg',
                   width: 30,
                   height: 30,
                   colorFilter: const ColorFilter.mode(

@@ -30,36 +30,36 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/biceps_splash.png"
+  image_path: "assets/images/biceps_splash.png"
   min_sdk_android: 21
   web:
     generate: true
-    image_path: "assets/biceps_splash.png"
+    image_path: "assets/images/biceps_splash.png"
   windows:
     generate: true
-    image_path: "assets/biceps_splash.png"
+    image_path: "assets/images/biceps_splash.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/biceps_splash.png"
+    image_path: "assets/images/biceps_splash.png"
 
 flutter_native_splash:
-  image: assets/biceps_splash.png
+  image: assets/images/biceps_splash.png
   color: "#ffffff"
   android_12:
-    image: assets/biceps_splash_12.png
+    image: assets/images/biceps_splash_12.png
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/list.svg
-    - assets/back.png
-    - assets/abs.png
-    - assets/arms.png
-    - assets/legs.png
-    - assets/chest.png
-    - assets/shoulders.png
-    - assets/avatar.svg
-    - assets/biceps_splash.png
-    - assets/empty_state.png
-    - assets/error_state.png
+    - assets/images/list.svg
+    - assets/images/back.png
+    - assets/images/abs.png
+    - assets/images/arms.png
+    - assets/images/legs.png
+    - assets/images/chest.png
+    - assets/images/shoulders.png
+    - assets/images/avatar.svg
+    - assets/images/biceps_splash.png
+    - assets/images/empty_state.png
+    - assets/images/error_state.png

@@ -14,7 +14,7 @@ class AppEmptyState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/empty_state.png',
+            'assets/images/empty_state.png',
             height: screenWidth * 0.8,
             width: screenWidth * 0.8,
             colorBlendMode: BlendMode.src,

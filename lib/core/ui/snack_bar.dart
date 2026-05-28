@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fitness_tracker/app/theme/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum AppToastType { info, success, error, warning }
@@ -107,10 +108,10 @@ class _AppToastState extends State<_AppToast>
 
   IconData get _icon {
     return switch (widget.type) {
-      AppToastType.info => Icons.info_outline,
+      AppToastType.info => CupertinoIcons.info_circle_fill,
       AppToastType.success => Icons.check,
       AppToastType.error => Icons.close,
-      AppToastType.warning => Icons.warning_amber_rounded,
+      AppToastType.warning => CupertinoIcons.exclamationmark,
     };
   }
 

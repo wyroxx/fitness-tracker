@@ -14,7 +14,7 @@ class AppErrorState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/error_state.png',
+            'assets/images/error_state.png',
             width: screenWidth * 0.8,
             height: screenWidth * 0.8,
             colorBlendMode: BlendMode.src,

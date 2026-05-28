@@ -42,7 +42,7 @@ class MuscleCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/${title.toLowerCase()}.png',
+                'assets/images/${title.toLowerCase()}.png',
                 width: size * 0.55,
                 height: size * 0.55,
               ),
